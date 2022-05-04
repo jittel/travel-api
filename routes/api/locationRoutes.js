@@ -1,16 +1,16 @@
 const router = require('express').Router();
-const { Trip, Traveller, Location } = require('../../models');
+const { Trip, Location } = require('../../models');
 
-// The `/api/trips` endpoint
+// The `/api/Locations` endpoint
 
 router.get('/', (req, res) => {
-    // find all trips
-    Trip.findAll({
+    // find all Locations
+    Location.findAll({
         // be sure to include its associated location and Traveller data
-        include: [Traveller, Location]
+        include: [Trip]
     })
-        .then(dbTrips => {
-            res.json(dbTrips);
+        .then(dbLocations => {
+            res.json(dbLocations);
         })
         .catch(err => {
             console.log(err);
@@ -19,13 +19,13 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    // find a single trip by its `id`
-    Trip.findByPk(req.params.id, {
+    // find a single Location by its `id`
+    Location.findByPk(req.params.id, {
         // be sure to include its associated location and Traveller data
-        include: [Traveller, Location]
+        include: [Trip]
     })
-        .then(dbTrips => {
-            res.json(dbTrips);
+        .then(dbLocations => {
+            res.json(dbLocations);
         })
         .catch(err => {
             console.log(err);
@@ -34,10 +34,10 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    // create a new trip
-    Trip.create(req.body)
-        .then(newTrip => {
-            res.json(newTrip);
+    // create a new Location
+    Location.create(req.body)
+        .then(newLocation => {
+            res.json(newLocation);
         })
         .catch(err => {
             console.log(err);
@@ -46,13 +46,13 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    // delete on trip by its `id` value
-    Trip.destroy({
+    // delete on Location by its `id` value
+    Location.destroy({
         where: {
             id: req.params.id
         }
-    }).then(delTrip => {
-        res.json(delTrip);
+    }).then(delLocation => {
+        res.json(delLocation);
     })
         .catch(err => {
             console.log(err);
